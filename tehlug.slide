@@ -4,6 +4,7 @@ April 30, 2015
 fzerorubigd
 Tehlug
 fzero@rubi.gd
+http://fzero.rubi.gd
 
 * Hello, World!
 
@@ -21,6 +22,7 @@ fzero@rubi.gd
 - Statically type-checked, dynamically type-safe
 - Garbage-collected
 - Fast compilation, efficient execution
+- You can use it on Android (Accept it Java lovers :) )
 
 * Hello, World! Internet-style
 
@@ -35,7 +37,6 @@ fzero@rubi.gd
 - Simple install, simple compile, easy to test, easy to adopt
 
 .image tehlug/shutup.jpg 300 300
-
 
 * Great tools!
 
@@ -71,6 +72,7 @@ fzero@rubi.gd
 
 - Build with Go, no need to C anymore
 - The Go Developers are the Go Developers :)
+- Who said Java??
 
 .image tehlug/egg.jpg 300 300
 
@@ -90,7 +92,7 @@ fzero@rubi.gd
 
 - A goroutine runs concurrently (but not necessarily in parallel)
 - A goroutine has its own stack
-
+- Its not Java. (Oh sorry, Yes I know, its not funny anymore)
 
 * A simple example
 
@@ -131,7 +133,7 @@ The main goroutine receives (and prints) all results from the same channel:
 
 .play tehlug/concurrency2.go /main START/,/main END/
 
-* Another example 
+* Another example
 
 A simple but effective way to create random string, with channels, go routines by [[https://blog.cloudflare.com/go-at-cloudflare/][cloudflare]]
 
@@ -148,6 +150,7 @@ A simple but effective way to create random string, with channels, go routines b
 - Its not thread safe by design to be fast
 - You need ti use lock
 - or channels of channels
+- But its better than Java. No. its funny yet.
 
 .image tehlug/hate.jpg 300 300
 
@@ -167,7 +170,11 @@ A simple but effective way to create random string, with channels, go routines b
 
 .image tehlug/plan9.jpg
 
-* IDE , not yet
+* IDE , not a good one yet
+
+- LiteIde is cool
+- Intelij has a golang plugin (very Bugy, yes its in Java, Java, JAVA!)
+- Sublime plugin is not bad
 
 .image tehlug/ide.jpg
 
@@ -184,5 +191,8 @@ A simple but effective way to create random string, with channels, go routines b
 
 the weblog and all installed packages document :
 
-	godoc -http=6060 && xdg-open http://localhost:6060
-	
+    godoc -http=6060 & xdg-open http://localhost:6060
+
+* Final word
+
+.image tehlug/java.jpg
