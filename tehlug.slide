@@ -2,7 +2,7 @@ Go, A simple introduction
 April 30, 2015
 
 fzerorubigd
-Tehlug
+@fzerorubigd
 fzero@rubi.gd
 http://fzero.rubi.gd
 
@@ -48,6 +48,12 @@ http://fzero.rubi.gd
 
 .image tehlug/neo.jpg 300 300
 
+* Good quality std lib and 3rd library
+
+- Many high quality code
+- the idiomatic code concept
+
+.image tehlug/idiomatic.jpg
 
 * Neutral language
 
