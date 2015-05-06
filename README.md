@@ -7,3 +7,5 @@ go get github.com/golang/tools/cmd/present
 cd /path/to/this/slide
 $GOPATH/bin/present
 ```
+
+Or see it live http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/tehlug.slide
