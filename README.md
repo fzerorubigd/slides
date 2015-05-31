@@ -8,4 +8,8 @@ cd /path/to/this/slide
 $GOPATH/bin/present
 ```
 
-Or see it live http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/tehlug.slide
+## Live
+
+My tehlug presentation :  http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/tehlug.slide
+
+My Ubuntu fest presentation : http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/ubuntu.slide
