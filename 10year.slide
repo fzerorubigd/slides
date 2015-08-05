@@ -1,0 +1,147 @@
+Web Development in Go
+Tehlug 
+06 Aug 2015
+
+
+fzerorubgd
+fzero@rubi.gd
+http://fzero.rubi.gd/
+@fzerorubigd
+
+* Warning!
+
+.image 10year/bita.jpg
+
+There is a lot of pictures, *Bita* love it this way :)
+
+
+
+* The web development
+
+Early days, WebServers.
+
+.image 10year/oldschool.gif
+
+It's that simple? You bet. 
+
+* The CGI
+
+.image 10year/cgi.gif 300 400
+
+- pass data to app, return the output to user
+- C/Perl/PHP and then Python/Ruby
+- Fast, no need to implement all part of protocol
+- The good old apache web server, one thread per request
+
+* The Concurrency Era
+
+.image 10year/chart.jpg 300 400
+
+- MANY request per day!
+- N thread for ALL requests
+- farewell CGI 
+
+* WebServers Take 2
+
+.image 10year/unicorn.png 300 300
+
+- Why not implement them again? its not that hard!
+- unicorn/gunicorn/thin/...
+
+* What is the point?
+
+.image 10year/panda.jpg 400 400
+
+* Golang
+
+A simple web server in golang
+my favorite demo code in all my slides!
+
+.play 10year/hellohttp.go
+
+* Inside view
+
+ func HelloServer(w http.ResponseWriter, req *http.Request) {
+ 	log.Println(req.URL)
+ 	fmt.Fprintf(w, "سلام دنیا!\nURL = %s\n", req.URL)
+ }
+ 
+
+- Just a request, and a response!
+- Called in go routine
+- Do I need to talk about go routines?
+ 
+* the Response
+ 
+ type ResponseWriter interface {
+        Header() Header
+        Write([]byte) (int, error)
+        WriteHeader(int)
+ }
+ 
+- Yes, its io.Witer compatible
+- Also support for CloseNotifier, Flusher, Hijacker
+ 
+* the request 
+
+ type Request struct {
+        Method string
+        URL *url.URL
+        Proto      string // "HTTP/1.0"
+        ProtoMajor int    // 1
+        ProtoMinor int    // 0
+        Header Header
+        Body io.ReadCloser
+        ContentLength int64
+        TransferEncoding []string
+        Close bool
+        Host string
+        Form url.Values
+        PostForm url.Values
+        MultipartForm *multipart.Form
+        Trailer Header
+        RemoteAddr string
+        RequestURI string
+        TLS *tls.ConnectionState
+ }
+ 
+* All hail the http2!
+
+.image 10year/http2.png 
+
+* No Image in previous slides? 
+
+.image 10year/plankton.jpg
+
+technically, there is an image in previous slides, but you know kids :)
+
+* The router
+
+ type Handler interface {
+        ServeHTTP(ResponseWriter, *Request)
+ }
+
+Mux in golang world
+
+Many of them are available. Gorilla, Pat, Routes...
+
+* WebSockets Era?
+
+.play 10year/websocket.go /main START/,/main END/
+
+* WebSocket
+
+.image 10year/bob.jpg
+
+- Support it like its designed for this!
+- Go routnes/Channels what else do you need?
+- Personally I preffer http://www.gorillatoolkit.org/pkg/websocket
+- Use your imagination!
+
+* Frameworks
+
+.image 10year/2bornot2be.jpg
+
+Why not?
+Why its good?
+gin/martini/BeeGo/revel/.... "net/http"
