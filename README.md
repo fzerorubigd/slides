@@ -10,6 +10,8 @@ $GOPATH/bin/present
 
 ## Live
 
-My tehlug presentation :  http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/tehlug.slide
+My tehlug presentation :  http://go-talks.appspot.com/github.com/fzerorubigd/golang-slides/tehlug.slide
 
-My Ubuntu fest presentation : http://go-talks.appspot.com/github.com/fzerorubigd/tehlug-golang/ubuntu.slide
+My Ubuntu fest presentation : http://go-talks.appspot.com/github.com/fzerorubigd/golang-slides/ubuntu.slide
+
+Tehlug 10th birthday : http://go-talks.appspot.com/github.com/fzerorubigd/golang-slides/10year.slide
