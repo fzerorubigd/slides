@@ -1,0 +1,101 @@
+A Gentle Introduction To Service Discovery
+ZConf 2015
+17 Sep 2015
+
+fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd/
+@fzerorubigd
+
+* Definition
+
+.image zconf/ddg.png
+
+* Static Config file
+
+- Simple
+- Easy to use and maintain
+- No Automatic fallback
+- Must manage it by hand
+
+* Problems to solve
+
+- Service registration
+- Service discovery
+
+* Other thing
+
+- Availability and monitoring for failure (Heartbeat)
+- Load balancing (as a side goal)
+- Dependency and availability to programming languages
+
+
+* ZooKeeper
+
+[[https://zookeeper.apache.org/][zookeeper.apache.org]]
+.image zconf/zookeeper_small.gif
+
+- Centralized
+- Zab protocol
+- Ensemble (cluster) base,
+- Watch/Notification is available
+- Language binding is not easy to use
+- Majority of nodes is required
+- Partition problem
+
+* Etcd
+
+[[https://github.com/coreos/etcd][Etcd github]]
+
+- CoreOS base part
+- Key/Value Store
+- Raft Protocol
+- Http api
+- Long poll with TTL on keys
+- Require to elect a leader
+
+* Etcd Replication
+
+.image zconf/etcd-replication.png
+
+* Etcd Cluster
+
+.image zconf/etcd-cluster.png
+
+* Etcd API
+
+.image zconf/etcd-api.png
+
+* Serf
+
+[[https://serfdom.io/][sefrdom.io]]
+
+- Gosip base
+- Low level (node level) health check
+
+* DNS : Take it to the next level!
+
+- [[http://labs.spotify.com/tag/dns/][Spotify and DNS]]
+- [[https://github.com/miekg/dns][Golang and the great DNS library]]
+- [[https://github.com/skynetservices/skydns][SkyDNS]]
+
+* Consul
+
+[[https://www.consul.io][Consul.io]]
+
+- Some functionality base on Serf
+- Service Discovery via HTTP/DNS
+- Health Checking (Heartbeat)
+- Key/Value Store
+- Gosip Based
+
+* Consul 10,000 foot view
+
+.image zconf/consul-arch.png 450 500
+
+* confd
+
+[[https://github.com/kelseyhightower/confd][confd Github]]
+
+- For applications out of your control
+- config generator
