@@ -11,6 +11,8 @@ http://fzero.rubi.gd/
 
 .image zconf/ddg.png
 
+(3)
+
 * Static Config file
 
 - Simple
@@ -18,10 +20,14 @@ http://fzero.rubi.gd/
 - No Automatic fallback
 - Must manage it by hand
 
+(5)
+
 * Problems to solve
 
 - Service registration
 - Service discovery
+
+(7)
 
 * Other thing
 
@@ -29,6 +35,7 @@ http://fzero.rubi.gd/
 - Load balancing (as a side goal)
 - Dependency and availability to programming languages
 
+(8)
 
 * ZooKeeper
 
@@ -43,6 +50,8 @@ http://fzero.rubi.gd/
 - Majority of nodes is required
 - Partition problem
 
+(12)
+
 * Etcd
 
 [[https://github.com/coreos/etcd][Etcd github]]
@@ -54,17 +63,25 @@ http://fzero.rubi.gd/
 - Long poll with TTL on keys
 - Require to elect a leader
 
+(16)
+
 * Etcd Replication
 
 .image zconf/etcd-replication.png
+
+(17)
 
 * Etcd Cluster
 
 .image zconf/etcd-cluster.png
 
+(18)
+
 * Etcd API
 
 .image zconf/etcd-api.png
+
+(19)
 
 * Serf
 
@@ -73,11 +90,15 @@ http://fzero.rubi.gd/
 - Gosip base
 - Low level (node level) health check
 
+(20)
+
 * DNS : Take it to the next level!
 
 - [[http://labs.spotify.com/tag/dns/][Spotify and DNS]]
 - [[https://github.com/miekg/dns][Golang and the great DNS library]]
 - [[https://github.com/skynetservices/skydns][SkyDNS]]
+
+(21)
 
 * Consul
 
@@ -89,9 +110,13 @@ http://fzero.rubi.gd/
 - Key/Value Store
 - Gosip Based
 
+(26)
+
 * Consul 10,000 foot view
 
 .image zconf/consul-arch.png 450 500
+
+(27)
 
 * confd
 
@@ -99,3 +124,5 @@ http://fzero.rubi.gd/
 
 - For applications out of your control
 - config generator
+
+(30)
