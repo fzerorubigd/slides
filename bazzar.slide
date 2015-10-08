@@ -1,0 +1,463 @@
+Go, A long run
+Octobr 8, 2015
+
+fzerorubigd
+@fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd
+
+* Hello, World!
+
+.play tehlug/hello.go
+
+.image tehlug/bita.jpg 300 300
+.caption _Gopher_ by bita
+
+* Hello, World! Internet-style
+
+.play tehlug/hellohttp.go
+
+* Program elements
+
+* Constants
+
+- Maintained precisely:
+	const e = 2.71828182845904523536028747135266249775724709369995957496696763
+	const third = 1/3
+- Typed or without type:
+	const M64 int64 = 1<<20
+        const M = 1<<20
+- Evaluated at compile-time:
+	const big = 1<<100 / 1e30  // valid constant expression
+
+Compiler complains if a constant doesn't fit where it is _used_.
+
+.link http://blog.golang.org/constants
+
+* Variables
+
+- Statically typed:
+	var x int
+	var s, t string
+- Implicitly or explicitly initialized:
+	var x int
+	var s, t string = "foo", "bar"  // multiple assignment
+
+	var x = 42                      // int
+	var s, b = "foo", true          // string, bool
+- Short variable declaration (inside functions only):
+	x := 42
+	s, b := "foo", true
+- Can safely take address of _any_ variable!
+	return &x
+# compiler will do the right thing
+
+
+* Types
+
+- Predeclared types, the usual suspects:
+	uint8 (byte), uint16,  uint32, uint64,
+	int8, int16,  int32 (rune), int64,
+	float32, float64,
+	complex64, complex128, //Why? do we need them?
+	uint, int, uintptr,
+	bool, string,
+	error  // not so usual
+
+- Composite types:
+	array, struct, pointer, function,
+	slice, map, channel
+
+- Abstract type:
+	interface
+
+
+* Type declarations
+
+- Composition from left-to-right (Pascal style):
+	[10]byte  // array of 10 bytes
+
+	struct {
+		name        string
+		left, right *Node
+		action      func(*Node)
+	}
+
+	func(a, b, c int)
+	func(http.ResponseWriter, *http.Request) error
+
+- A type declaration defines a _new_ type:
+	type Weekday int
+
+	type Point struct {
+		x, y int
+	}
+
+
+* Slices
+
+	[]T  // slice of T
+
+- Descriptor for an underlying array segment
+- May grow and shrink
+- Has length and capacity
+- Assigning a slice copies the descriptor, not the underlying array
+
+Common slice operations:
+
+	len(s)
+	s[i]
+	s[i:j]
+	append(s, x)  // append element x to slice s and return new slice
+
+- Slices play the role of dynamically sized arrays
+- Widely used in Go code
+
+* Pointers
+
+- Pointers are values which point to other values
+- For each type, there exists a distinct pointer type, accessible via the address of, `&`, and dereference, `*` operators.
+- No pointer arithmetic
+
+        x := 1000
+        y := &x
+        y += 4          // nope
+
+
+* Maps
+
+	map[K]V  // map K -> V
+
+- Map is a language-supplied hash table
+- Maps values of key type K to values of type V
+- Assigning a map copies the map reference, not the map contents
+
+Common map operations:
+
+	make(map[K]V)
+	len(m)
+	m[k]
+	delete(m, k)
+
+- Map iteration order is not specified:
+
+	for key, value := range m {
+		// order of key sequence different each time
+	}
+
+* Statements
+
+- Curly braces (C style)
+- Multiple assignments and some other new constructs
+- Statements are _not_ Expressions.
+- Many cleanups: mandatory braces, no parentheses for conditionals, implicit break in switches, no semicolons, etc.
+	a, b = b, a                 // swap
+	f, err = os.Open(filename)
+
+	if x < y {
+		return x
+	} else {
+		return y
+	}
+
+	switch day {
+	case Mon:
+		...
+		// break is implicit
+	case Tue, Wed:
+		...
+	}
+
+* Statements, continued
+
+- Unified `for` syntax
+
+	for {
+		// loop forever
+	}
+
+
+`range` over arrays, slices, and maps
+
+	for i, num := range numbers { ... }
+	for city, pop := range population { ... }
+
+
+* Statements, continued
+
+- `defer` for defered call
+
+	func DoSomething() {
+		lock.Lock()
+		defer lock.Unlock()
+		
+		// Your code
+	}
+
+Not shown: break, goto, continue, fallthrough
+
+* Goto
+
+Sorry, but why?
+
+.image ubuntu/yuno.jpg 500 500
+
+
+* Functions
+
+- Regular functions
+	func Sin(x float64) float64
+	func AddScale(x, y int, f float64) int
+
+- Multiple return values
+	func Write(data []byte) (written int, err error)
+
+- Variadic parameter lists without magic
+	func Printf(format string, args ...interface{})
+
+- Functions are first-class values
+	var delta int
+	return func(x int) int { return x + delta }
+
+* Methods
+
+Methods are functions with a _receiver_ parameter:
+
+.code ubuntu/point.go /String START/,/String END/
+
+The receiver binds the method to its _base_type_ (Point):
+
+.code ubuntu/point.go /Point START/,/Point END/
+
+Methods are invoked via the usual dot notation:
+
+.play ubuntu/point.go /main START/,/main END/
+
+
+* Methods can be defined for any user-defined type!
+
+For the Weekday type:
+
+.code ubuntu/weekday.go /type START/,/type END/
+
+Define String method on Weekday:
+
+.code ubuntu/weekday.go /String START/,/String END/
+
+.play ubuntu/weekday.go /main START/,/main END/
+
+Method calls via non-interface types are statically dispatched.
+
+* Interface types
+
+- Abstract
+- Define (possibly empty) set of method signatures
+- Values of _any_type_ that implement all methods of an interface can be assigned to a variable of that interface.
+
+Examples:
+
+	interface{}  // empty interface
+
+	interface {
+		String() string
+	}
+
+	interface {
+		Len() int
+		Swap(i, j int)
+		Less(i, j int) bool
+	}
+
+
+* Using interfaces
+
+.code ubuntu/stringer.go /Stringer START/,/Stringer END/
+
+Both Weekday and Point define a String method, so values of both can be assigned to
+a variable of Stringer type:
+
+.play ubuntu/stringer.go /main START/,/main END/
+
+Method calls via interface types are dynamically dispatched ("virtual function call").
+
+* Packages
+
+- Packages define boundaries for compilation and reuse.
+- Packages are directories containing source code.
+- The unit of compilation is the package, not the file.
+- You import a whole package, not a type, or a symbol.
+
+Packages you import are referenced by their package's prefix.
+
+	import "fmt"
+
+	func main() {
+		fmt.Printf("Hello %s\n", "world)
+	}
+
+Import cycles are not permitted.
+
+* Concurrency
+
+* Goroutines
+
+- The _go_ statement launches a function call as a goroutine
+	go f()
+	go f(x, y, ...)
+
+- A goroutine runs concurrently (but not necessarily in parallel)
+- A goroutine is a thread of control within the program, with its own local variables and stack. Much cheaper to create and schedule than operating system threads.
+
+
+* A simple example
+
+.code ubuntu/concurrency1.go /f START/,/f END/
+
+Function f is launched as 3 different goroutines, all running concurrently:
+
+.play ubuntu/concurrency1.go /main START/,/main END/
+
+
+* Communication via channels
+
+A channel type specifies a channel value type (and possibly a communication direction):
+
+	chan int
+	chan<- string  // send-only channel
+	<-chan T       // receive-only channel
+
+A channel is a variable of channel type:
+
+	var ch chan int
+	ch := make(chan int)  // declare and initialize with newly made channel
+
+A channel permits _sending_ and _receiving_ values:
+
+	ch <- 1   // send value 1 on channel ch
+	x = <-ch  // receive a value from channel ch (and assign to x)
+
+Channel operations synchronize the communicating goroutines.
+
+* Communicating goroutines
+
+Each goroutine sends its results via channel ch:
+
+.code ubuntu/concurrency2.go /f START/,/f END/
+
+The main goroutine receives (and prints) all results from the same channel:
+
+.play ubuntu/concurrency2.go /main START/,/main END/
+
+* Another example
+
+A simple but effective way to create random string, with channels, go routines by [[https://blog.cloudflare.com/go-at-cloudflare/][cloudflare]]
+
+.play ubuntu/cloud.go /f START/,/f END/
+
+* The Holy Select!
+
+.play ubuntu/select.go /main START/,/main END/
+
+* Bad Parts
+
+* No templae!
+
+- Use code generation (the gen command)
+
+* Maps are not thread safe
+
+- Its not thread safe by design to be fast
+- You need ti use lock
+- or channels of channels
+- But its better than Java. No. its funny yet.
+
+.image tehlug/hate.jpg 300 300
+
+* go-get
+
+- Can not use a version, or tag (some talk about another tool and vendoring in golang-dev)
+- must deal with private repositories manually
+
+* go test
+
+- There is no official way to construct/destruct things in test
+
+* plan-9
+
+- Why its there? why so much effort?
+- flag package is a bad thing! don't use it folks.
+
+.image tehlug/plan9.jpg
+
+* IDE , not a good one yet
+
+- LiteIde is cool
+- Intelij has a golang plugin (very Bugy, yes its in Java, Java, JAVA!)
+- Sublime plugin is not bad
+
+.image tehlug/ide.jpg
+
+* Error handling
+
+- panic/recover is good, but never abuse it!
+.image tehlug/err.png 500 600
+
+* Select is limited to channel
+
+- Can not select on read/write operation
+
+	selec {
+	case ch1 <- struct{}{}:
+    case <- ch2:
+    case reader.Read: // WRONG :/
+    }
+
+- Workaround : use functions and read write from/to channels
+
+* go build
+
+- Can not build multiple binary at once
+- Many not importable main package
+- Shared package problem
+
+* Best practce and pitfalls
+
+* Exception vs Panic
+
+- They are not same
+- egg sample :)
+
+* Use interface, Ask for what you need
+
+.code bazzar/shortercode1.go /type Gopher/,/^}/
+
+We could define this method
+
+.code bazzar/shortercode1.go /WriteToFile/
+
+But using a concrete type makes this code difficult to test, so we use an interface.
+
+.code bazzar/shortercode1.go /WriteToReadWriter/
+
+And, since we're using an interface, we should ask only for the methods we need.
+
+.code bazzar/shortercode1.go /WriteToWriter/
+
+* Avoid concurrency in your API
+
+.play bazzar/concurrency1.go /START/,/END/
+
+What if we want to use it sequentially?
+
+* Avoid concurrency in your API
+
+.play bazzar/concurrency2.go /START/,/END/
+
+* Channels are your friend
+
+- Why no peek is available 
+- Use select!
+
+* gb , the build tool
+
+	go get github.com/constabulary/gb/...

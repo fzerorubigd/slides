@@ -8,7 +8,7 @@ import (
 
 func HelloServer(w http.ResponseWriter, req *http.Request) {
 	log.Println(req.URL)
-	fmt.Fprintf(w, "سلام تهلاگ!\nURL = %s\n", req.URL)
+	fmt.Fprintf(w, "Hello world!\nURL = %s\n", req.URL)
 }
 
 func main() {
