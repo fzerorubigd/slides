@@ -367,7 +367,7 @@ A simple but effective way to create random string, with channels, go routines b
 * Maps are not thread safe
 
 - Its not thread safe by design to be fast
-- You need ti use lock
+- You need to use lock
 - or channels of channels
 - But its better than Java. No. its funny yet.
 
