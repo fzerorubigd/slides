@@ -1,0 +1,204 @@
+Go, Yet another introduction
+March 02, 2016
+
+fzerorubigd
+@fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd
+
+* Hello, World!
+
+.play tehlug/hello.go
+
+.image tehlug/bita.jpg 300 300
+.caption _Gopher_ by bita
+
+* The Go programming language
+
+- Modern language
+- Compile to native code, staticly linked
+- Built in concurrency support
+- Compact, concise, general-purpose
+- Statically type-checked, dynamically type-safe
+- Garbage-collected
+- Fast compilation, efficient execution
+- You can use it on Android, iOS (not stable yet)
+
+* Hello, World! Internet-style
+
+.play tehlug/hellohttp.go
+
+* Static build
+
+- no need to install this or that in order to run application ...
+- ...except if using CGo (Oh! You can use C and C++ too, Fortran is planned for 1.7)
+- only need libc (Who doesn't have?) (just for dns things) ...
+- ... and can ditch that too.
+- Simple install, simple compile, easy to test, easy to adopt
+
+.image tehlug/shutup.jpg 300 300
+
+* Great tools!
+
+- go get, go install, go build, go run
+- gofmt, goimports
+- godoc
+- go test! yes it has builtin test :)
+- gorename/go-oracle/go vet/race detector
+
+.image tehlug/neo.jpg 300 300
+
+* Good quality std lib and 3rd library
+
+- Many high quality code
+- the idiomatic code concept
+
+.image tehlug/idiomatic.jpg
+
+* Neutral language
+
+- Simple syntax, easy to catch, fully utf-8, and different! ITS DIFFERENT
+- its not C
+- its not C++
+- its not Java
+- its not Java (I said it twice? :) )
+
+.image tehlug/compare.jpg 300 300
+
+* Multi arch/cross compile
+
+- support for _os (_linux.go _windows.go) no need to pre-processor
+- Very simple cross compile no need to anything else! (Go>1.5)
+
+  env GOOS=windows GOARCH=386 go build
+
+.image tehlug/megusta.jpg
+
+* From Gophers to Gophers!
+
+- Build with Go, no need to C anymore
+- The Go Developers are the Go Developers :)
+- Who said Java??
+
+.image tehlug/egg.jpg 300 300
+
+* Concurrency
+
+* Basic
+
+- [[http://en.wikipedia.org/wiki/Communicating_sequential_processes][Communicating sequential processes]] By Sir Tony Hoare
+- Goroutine and channels
+- Next slides are from "A Taste of Go" talk in August 14, 2014 by Robert Griesemer
+
+* Goroutines
+
+- The _go_ statement launches a function call as a goroutine
+	go f()
+	go f(x, y, ...)
+
+- A goroutine runs concurrently (but not necessarily in parallel)
+- A goroutine has its own stack
+- Its not Java. (Oh sorry, Yes I know, its not funny anymore)
+
+* A simple example
+
+.code tehlug/concurrency1.go /f START/,/f END/
+
+Function f is launched as 3 different goroutines, all running concurrently:
+
+.play tehlug/concurrency1.go /main START/,/main END/
+
+
+* Communication via channels
+
+A channel type specifies a channel value type (and possibly a communication direction):
+
+	chan int
+	chan<- string  // send-only channel
+	<-chan T       // receive-only channel
+
+A channel is a variable of channel type:
+
+	var ch chan int
+	ch := make(chan int)  // declare and initialize with newly made channel
+
+A channel permits _sending_ and _receiving_ values:
+
+	ch <- 1   // send value 1 on channel ch
+	x = <-ch  // receive a value from channel ch (and assign to x)
+
+Channel operations synchronize the communicating goroutines.
+
+* Communicating goroutines
+
+Each goroutine sends its results via channel ch:
+
+.code tehlug/concurrency2.go /f START/,/f END/
+
+The main goroutine receives (and prints) all results from the same channel:
+
+.play tehlug/concurrency2.go /main START/,/main END/
+
+* Another example
+
+A simple but effective way to create random string, with channels, go routines by [[https://blog.cloudflare.com/go-at-cloudflare/][cloudflare]]
+
+.play tehlug/cloud.go /f START/,/f END/
+
+* The Holy Select!
+
+.play tehlug/select.go /main START/,/main END/
+
+* Bad Parts
+
+* Generics
+
+- Do you miss eneric in Go?
+- No
+- Really?
+- (NO COMMENT)
+
+
+.image meetup/generic.gif
+
+* go test
+
+- There is no official way to construct/destruct things in test
+
+* plan-9
+
+- Why its there? why so much effort?
+- flag package is a bad thing! don't use it folks.
+
+.image tehlug/plan9.jpg
+
+* Error handling
+
+- panic/recover is good, but never abuse it!
+.image tehlug/err.png 500 600
+
+* Some random thing
+
+* IDE 
+
+- LiteIde is cool
+- Intelij has a golang plugin (its stable now)
+- Atom Editor with GoPlus is nice
+- Sublime plugin is not bad
+
+.image tehlug/ide.jpg
+
+* Web Development
+
+- Cool tools and standard library 
+- Builting support for http/2 
+
+* More resource
+
+- [[http://golang.org/ref/spec][The holy refrence]]
+- [[https://golang.org/doc/effective_go.html][Effective Go]]
+
+the weblog and all installed packages document :
+
+    godoc -http=6060 & xdg-open http://localhost:6060
+
