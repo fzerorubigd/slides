@@ -1,0 +1,81 @@
+Unix Philosophy (fast and furious)
+Isfahan SFD
+20 Oct 2016
+
+
+fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd/
+@fzerorubigd
+
+* The Unix rules!
+
+.image unix/kt_dr.jpg 400 500
+
+* One program one task!
+
+  - Write a program to do a single task
+  - There is a "yes" utility in unix
+  - true, false and many more!
+  - Even when there is a big idea!
+
+.image unix/one_job.jpg 300 300
+
+* New features?
+
+  - Do not add them to old one!
+  - Build afresh rather than complicate old programs by adding new "features"
+  - Do you know the `git` command?
+
+.image unix/feat.jpg
+
+* Use output of one, to input of another
+
+  - Write programs to handle text streams, because that is a universal interface.
+  - Do you see something like `ls -al | grep Aug | grep -v '200[456]' | more`
+
+.image unix/fuel.jpg
+
+* Less noise! (Rule of Silence)
+
+  - When the program must talk, then talk
+  - When the program has nothing to say, please shutup!
+  - Try to recover, if you can. but if you can't, exit
+
+.image unix/yuno.jpg
+
+* Write clean, not clever
+
+  - Write code for developers, not computers!
+
+.image unix/clever.jpg
+
+* Do it simple, do it right!
+
+  - Avoid stringently columnar or binary input formats.
+  - Don't insist on interactive input
+  - Avoid colour or add option to disable it
+
+.image unix/color.jpg
+
+* Do it dirty, but just do it!
+
+  - Design and build software, even operating systems, to be tried early, ideally within weeks.
+  - Don't hesitate to throw away the clumsy parts and rebuild them.
+  - Do you remember `git`?
+
+.image unix/notsure.jpg
+
+* DO NOT OPTIMIZE FIRST!!!
+
+  - When you have nothing, do not try to optimize
+  - When no benchmark is available, optimization is stupidity!
+
+.image unix/optimize.jpg
+
+* Tools and Tools!
+
+  - Use tools in preference to unskilled help to lighten a programming task, even if you have to detour to build the tools and expect to throw some of them out after you've finished using them.
+  - Try to build program to write programs for you (see yacc or bison)
+
+.image unix/tools.jpg
