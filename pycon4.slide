@@ -1,0 +1,94 @@
+Grumpy: Go running Python
+Pycon 4
+17 Feb 2017
+
+fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd/
+@fzerorubigd
+
+* Problem
+
+* GIL! Who is GIL?
+
+[[https://en.wikipedia.org/wiki/Global_interpreter_lock][GIL : Global interpreter lock]]
+
+.image pycon4/whoisgil.png
+
+* So what is this lock?
+
+- Why we need lock?
+- Can we just leave it to chance?
+- Oh Do we need a police? :))
+
+* Lock model (Jython)
+
+How we use Mutex to handle lock
+
+.code pycon4/lock.py
+
+* Lock model (CPython)
+
+.image pycon4/gil.png 300 700
+
+
+* The winner is...
+
+- Simplicity, Single thread? Or there is one CPU? GIL is the winner.
+- Not single thread? many concurrent job? GIL is a bad design!
+
+
+* Python Status
+
+[[https://wiki.python.org/moin/GlobalInterpreterLock][Python Wiki on GIL]]
+
+
+- CPyton has GIL
+- PyPy use GIL as well
+- Jython and IronPython eliminate the need
+
+* Is there any simple way to ignore GIL?
+
+No.
+- Old clumsy not thread safe C Codes
+- some Features like ______del____
+- API compatibility
+
+
+* Google fixing Gil :)
+
+* What is Grumpy?
+
+- Another Python runtime
+- Its a transpiler, not normal Intrpretor
+
+* Show me a Hello world example
+
+
+- Oh, its Python2.7 :/ (Since youtube is on that version)
+
+.code pycon4/hello.py
+
+* Result
+
+.code pycon4/hello.go
+
+* Is this a replacement for Python?
+
+NO.
+
+Also,
+- Never support for exec, eval, compile
+- C Extentions are not supported since API is different
+- it's possible to support them via an API bridge layer like JyNI
+
+
+* Roadmap? (From the github README)
+
+- Language features: Most language features are implemented with the notable exception of decorators. There are also a handful of operators that aren't yet supported.
+
+- Builtin functions and types: There are a number of missing functions and types in __builtins__ that have not yet been implemented. There are also a lot of methods on builtin types that are missing.
+
+- Standard library: The Python standard library is very large and much of it is pure Python, so as the language features and builtins get filled out, many modules will just work. But there are also a number of libraries in CPython that are C extension modules which will need to be rewritten.
+
+- C locale support: Go doesn't support locales in the same way that C does. As such, some functionality that is locale-dependent may not currently work the same as in CPython
