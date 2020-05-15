@@ -24,6 +24,7 @@ http://fzero.rubi.gd
 - Dependency versioning?
 - Different project with different dependencies
 - `go get` is NOT enough, and stupid!
+- I should mention gopkg.in
 
 * Tools built by user
 
