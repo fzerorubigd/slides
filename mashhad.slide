@@ -1,0 +1,126 @@
+Go, From GOPATH to Go Modules
+March 02, 2016
+
+fzerorubigd
+@fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd
+
+* Hello, World!
+
+.play tehlug/hello.go
+
+.image tehlug/bita.jpg 300 300
+.caption _Gopher_ by bita
+
+* The Good Old $GOPATH!
+
+- Using a folder to handle all Go files
+- Using "URL" as import path
+- `go get` is enough! 
+
+* Problems
+
+- Dependency versioning?
+- Different project with different dependencies
+- `go get` is NOT enough, and stupid!
+
+* Tools built by user
+
+- Many tools, for example [[https://github.com/tools/godep][Godep]]
+- Hacks like a _workspace folder to handle dependencies in VCS
+
+* GO15VENDOREXPERIMENT=1
+
+- [[https://github.com/golang/go/commit/183cc0cd41f06f83cb7a2490a499e3f9101befff][See the commit]]
+- The new expriment to add vendor to the project 
+- No explicit versioning (You are responsible to handle it manually)
+- You need to check in the vendor directory
+
+* Tools to manage `vendor` directory 
+
+- Many tools to handle the vendor (glide,godep,...)
+- Another war!
+
+.image mashhad/halim.jpg
+
+* Dep, the final dependency manager!?
+
+- Introduced as the tools that is going to be "Official"
+- Gopkg.toml
+
+* GO111MODULE=on
+
+- A new kid in town ([[https://research.swtch.com/vgo][Read the progress here]])
+- Introducing "modules" in Go
+
+.image mashhad/Aybabtu.png
+
+* Go moudle 
+
+- A collection of multiple go package in one repository (single version for all)
+- go.mod file
+- A repository contains one or more Go modules.
+- Each module contains one or more Go packages.
+- Each package consists of one or more Go source files in a single directory.
+
+* go.mod
+
+
+    module github.com/my/thing
+    
+    require (
+        github.com/some/dependency v1.2.3
+        github.com/another/dependency/v4 v4.0.0
+    )
+    replace github.com/some/dependency => ../dependency
+
+
+* Lock file: go.sum
+
+- Yes, you should commit this file
+
+.image mashhad/yes.jpg
+
+* Workflow 
+
+- go mod init github.com/my/repo
+- ... Create your files ...
+- go build / go test
+- Downloading a specific version using `go get foo@v1.2.3`, `go get foo@master`
+
+* Other useful commands
+
+
+- `go list -m all` — View final versions that will be used in a build for all direct and indirect dependencies
+- `go list -u -m all` — View available minor and patch upgrades for all direct and indirect dependencies
+- `go get -u ./...` or `go get -u=patch ./...` (from module root directory) — Update all direct and indirect dependencies to latest minor or patch upgrades (pre-releases are ignored)
+- `go build ./...` or `go test ./...` (from module root directory) — Build or test all packages in the module
+- `go mod tidy` — Prune any no-longer-needed dependencies from go.mod and add any dependencies needed for other combinations of OS, architecture, and build tags
+- `replace` directive or `gohack` — Use a fork, local copy or exact version of a dependency
+- `go mod vendor` — Optional step to create a vendor directory
+
+* Example: Replace
+
+   go mod edit -replace github.com/user/repo=../..
+
+.image mashhad/cat.jpg
+
+* Proxy, Centeral database?
+
+From proxy.golang.org:
+
+    The Go team is providing the following services run by Google: 
+    a module mirror for accelerating Go module downloads, an index 
+    for discovering new modules, and a global go.sum database 
+    for authenticating module content.
+
+* New Flags 
+
+- -mod=readonly 
+- -mod=vendor 
+- GOFLAGS 
+- GOPROXY=off 
+- GOPROXY=file:///filesystem/path
+
+- And more, see [[https://github.com/golang/go/wiki/Modules][the go module wiki]]
