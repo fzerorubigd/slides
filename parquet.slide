@@ -1,0 +1,121 @@
+Parquet File, In detail
+Jul 24, 2020
+
+fzerorubigd
+@fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd
+
+* What to expect
+
+This is about
+
+- Parquet file format and columnar storage 
+- File structure
+
+This is *not* about:
+
+- Big data and why it is essential, do I need it?
+
+This is partially about:
+
+- Comparing Parquet with another format
+- History of this format
+
+
+* Storing a record: Row-based
+
+.image parquet/row.png 
+
+
+* Row Based
+
+Pro:
+
+- Easier to write (no buffer needed)
+- Random access in one pass
+
+Con:
+
+- Not homogeneous data 
+- You need to scan all for query one field 
+
+* Storing records: Columnar
+
+.image parquet/col.png
+
+* Columnar
+
+Pro: 
+
+- Homogeneous data 
+- Read what you want (best for query one column)
+
+Con:
+
+- Buffered write
+- Access to a record is not easy
+
+* Parquet file
+
+- A columnar file format
+- A joint effort between Twitter and Cloudera
+- Now is an Apache Foundation project (Part of Apache Arrow)
+- Available in Java, Python, C++, Go...
+
+* Structure
+
+.image parquet/FileLayout.gif
+
+
+* Thrift and Parquet
+
+All parts have headers, and all headers are encoded with Thrift
+
+- Footer 
+- Row groups
+- Columns 
+- Pages
+
+* Pages in parquet 
+
+- Data page (V1,V2) 
+- Dictionary pages
+- Bloom filter 
+- Index page
+
+* Types 
+
+- BOOLEAN: 1 bit boolean
+- INT32: 32 bit signed ints
+- INT64: 64 bit signed ints
+- INT96: 96 bit signed ints
+- FLOAT: IEEE 32-bit floating-point values
+- DOUBLE: IEEE 64-bit floating-point values
+- BYTE_ARRAY: arbitrarily long byte arrays.
+
+* Logical types:
+- STRING
+- ENUM
+- UUID 
+- Signed/Unsigned INT(8,16,32,64)
+- DECIMAL
+- DATE
+- TIME
+- TIMESTAMP
+- INTERVAL
+- JSON/BSON
+- LIST/MAP
+- NULL
+
+* Dremel: Store nested data, but flat
+
+[[https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36632.pdf][Link to paper]]
+
+.image parquet/dremel.png
+
+* Go implementation 
+
+Go package to read and write parquet files. parquet is a file format to store nested data structures in a flat columnar data format. It can be used in the Hadoop ecosystem and with tools such as Presto and AWS Athena. 
+
+[[https://github.com/fraugster/parquet-go][fraugster/parquet-go]]
