@@ -1,0 +1,19 @@
+package main 
+
+// Interface START OMIT
+type sumTypes interface {
+	type int, float32 
+}
+// Interface END OMIT
+
+// Generics START OMIT
+func sum[T sumTypes](v1, v2 T) T {
+	return v1+v2
+}
+// Generics END OMIT
+
+// Normal START OMIT
+func sum2(v1, v2 sumTypes) sumTypes {
+	return v1+v2 // Wrong, v1 can be int but v2 can be float32
+}
+// Normal END OMIT

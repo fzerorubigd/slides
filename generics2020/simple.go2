@@ -1,0 +1,41 @@
+package main
+
+import "fmt"
+
+// Interface START OMIT
+type comparable interface {
+	type int, int64, int32, float64, float32
+}
+// Interface END OMIT
+
+// Simple2 START OMIT
+func minMax[T comparable](items []T) (min T, max T) {
+	if len(items) == 0 {
+		panic("invalid usage")
+	}
+
+	min = items[0]
+	max = items[0]
+	for _, i := range items {
+		if max < i {
+			max = i
+		}
+		if min > i {
+			min = i
+		}
+	}
+
+	return
+}
+// Simple2 END OMIT
+
+
+func main() {
+	// Main2 START OMIT
+ 	fmt.Println(minMax([]int{10, 20, 30}))
+	fmt.Println(minMax([]int32{10, 20, 30}))
+	fmt.Println(minMax([]int64{10, 20, 30}))
+	fmt.Println(minMax([]float32{10.7, 20.1, 30.0}))
+	fmt.Println(minMax([]float64{10.7, 20.1, 30.0}))
+	// Main2 END OMIT
+}

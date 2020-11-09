@@ -1,0 +1,29 @@
+package main 
+
+import "fmt"
+
+// Multi START OMIT
+func ToMap[K fmt.Stringer, V any](key []K, val []V) map[string]V {
+    if len(key) != len(val) {
+        panic("invalid call")
+    }
+
+    result := make(map[string]V)
+    for i := range key {
+        result[key[i].String()] = val[i]
+    }
+
+    return result
+}
+// Multi END OMIT
+
+type Num int 
+
+func (n Num) String() string {
+    return fmt.Sprintf("Key-%d", n)
+}
+
+func main() {
+    fmt.Printf("%+v\n", ToMap([]Num{1,2,3}, []string{"a", "b", "c"}))
+    fmt.Printf("%+v\n", ToMap([]Num{1,2,3}, []float64{1.1, 2.2, 3.3}))
+}

@@ -1,0 +1,34 @@
+package main
+
+import "fmt"
+
+type comparable interface {
+	type int, int64, int32, float64, float32
+}
+
+// Simple START OMIT
+// WRONG! this code is not valid in go2go
+func minMax(items []comparable) (min comparable, max comparable) {
+	if len(items) == 0 {
+		panic("invalid usage")
+	}
+
+	min = items[0]
+	max = items[0]
+	for _, i := range items {
+		if max < i {
+			max = i
+		}
+		if min > i {
+			min = i
+		}
+	}
+
+	return
+}
+
+// Simple END OMIT
+
+func main() {
+	fmt.Println(minMax([]int{10, 20, 30}))
+}

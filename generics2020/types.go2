@@ -1,0 +1,28 @@
+package main 
+
+import "fmt"
+
+// Type START OMIT
+type sumTypes interface {
+	type int, int16, int32, int64, float32, float64, string 
+}
+
+func Add[T sumTypes](v1, v2 T) T {
+	sum :=  v1+v2
+	fmt.Printf("%[1]T => %[1]v\n", sum)
+	return sum 
+}
+
+type MyInt int 
+
+func main() {
+	Add(1, 2)
+	Add(int16(1), 2)
+	Add(int32(1), 2)
+	Add(int64(1), 2)
+	Add(1, float32(2))
+	Add(1.0, 2.0)
+	Add("Hello", "World")
+	Add(MyInt(1), 2)
+}
+// Type END OMIT

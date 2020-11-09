@@ -1,0 +1,30 @@
+package main
+
+//Mix START OMIT
+type car struct{}
+func (car) Move(){}
+
+type bike struct{}
+func (bike) Move(){}
+
+type plane struct{}
+func (plane) Move(){}
+
+type roadRunner interface {
+	type car, bike
+	Move()
+}
+//Mix END OMIT
+
+//Usage START OMIT
+func MoveOnRoad[T roadRunner](o T) {
+	o.Move()
+}
+
+func main () {
+	MoveOnRoad(car{})
+	MoveOnRoad(bike{})
+	// Next line is invalid 
+	// MoveOnRoad(plane{})
+}
+// Usage END OMIT

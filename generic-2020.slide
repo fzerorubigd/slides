@@ -1,0 +1,132 @@
+Generics in Golang
+Oct 25, 2020
+
+fzerorubigd
+@fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd
+
+* Reminder
+
+This is my takes of Generics draft, up to now. anything may change later, and in final version
+
+* Do we need Generics?
+
+.image meetup/generic.gif 
+
+* What is Generics?
+
+This code is a very simple example when Generics can help
+
+.code generics2020/simple.go /Simple START/,/Simple END/
+
+* Generic version
+
+This is the Generic version as of today (Mid Nov 2020)
+
+.code generics2020/simple.go2 /Simple2 START/,/Simple2 END/
+
+* What is "comparable" in the example?
+
+A simple interface but with a twist
+
+.code generics2020/simple.go2 /Interface START/,/Interface END/
+
+- There is `any` which is actually alias for `interface{}`
+- There should be some basic interfaces like `comparable`
+- Normal interfaces are acceptable
+
+* How to run the examples?
+
+There is a playground for it [[https://go2goplay.golang.org/]]
+
+     git clone git@github.com:golang/go.git
+     cd go
+     git checkout dev.go2go
+     cd src 
+     bash ./all.bash
+
+Then set the `GOPATH` and `GOROOT` for using this version
+
+For compiling go2 files (use go2 extension)
+
+     go tool go2go run file.go2
+
+* Can interface replace them?
+
+.code generics2020/diff.go2 /Interface START/,/Interface END/
+
+With Generics
+
+.code generics2020/diff.go2 /Generics START/,/Generics END/
+
+With Interface 
+
+.code generics2020/diff.go2 /Normal START/,/Normal END/
+
+* Why this code is wrong?
+
+This code is invalid
+
+.code generics2020/simple2.go2 /Simple START/,/Simple END/
+
+* Generics in Struct
+
+* Definition
+
+.code generics2020/struct.go2 /Type START/,/Type END/
+
+* Methods
+
+.code generics2020/struct.go2 /Method START/,/Method END/
+
+* Call 
+
+.code generics2020/struct.go2 /Call1 START/,/Call1 END/
+
+Infer type 
+
+.code generics2020/struct.go2 /Call2 START/,/Call2 END/
+
+* Using normal interfaces
+
+.code generics2020/behavior.go2 /Generics START/,/Generics END/
+
+VS. 
+
+.code generics2020/behavior.go2 /Normal START/,/Normal END/
+
+* Using Type interfaces 
+
+.code generics2020/types.go2 /Type START/,/Type END/
+
+* Mixed interfaces 
+
+Definition : 
+
+.code generics2020/both.go2 /Mix START/,/Mix END/
+
+* Mixed interfaces 
+
+Usage : 
+
+.code generics2020/both.go2 /Usage START/,/Usage END/
+
+* Mixed interfaces 
+
+    type mixed interface {
+      type int 
+      Fn()
+    }
+
+Any subtype of int, with `Fn` method
+
+* Field access 
+
+Note: This is not supported by current tooling, but supported in draft
+
+.code generics2020/field.go2 /Field START/,/Field END/
+
+* Multiple types
+
+.code generics2020/multiple.go2 /Multi START/,/Multi END/

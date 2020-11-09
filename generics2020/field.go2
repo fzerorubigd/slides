@@ -1,0 +1,27 @@
+package main
+
+import "fmt"
+
+// Field START OMIT
+type User struct {
+	ID int64
+}
+
+type Product struct {
+	ID int64
+}
+
+type Object interface {
+	type User, Product
+}
+
+func GetID[T Object](id T) int64 {
+	return id.ID
+}
+
+func main() {
+	// THIS IS NOT SUPPORTED BY TOOLING
+	fmt.Println(GetID(User{ID: 10}))
+	fmt.Println(GetID(Product{ID: 100}))
+}
+// Field END OMIT

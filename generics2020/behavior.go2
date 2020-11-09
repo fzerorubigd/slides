@@ -1,0 +1,25 @@
+package main
+
+import "fmt"
+
+// Generics START OMIT
+func ArrayToStrint[T fmt.Stringer](in []T) []string {
+	ret = make([]string, 0, len(in))
+	for i := range in {
+		ret = append(ret, in[i].String())
+	}
+
+	return ret
+}
+// Generics END OMIT
+
+// Normal START OMIT
+func ArrayToStrint(in []fmt.Stringer) []string {
+	ret = make([]string, 0, len(in))
+	for i := range in {
+		ret = append(ret, in[i].String())
+	}
+
+	return ret
+}
+// Normal END OMIT

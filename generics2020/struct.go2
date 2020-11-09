@@ -1,0 +1,50 @@
+package main 
+
+import "fmt"
+
+// Type START OMIT
+type Vector[T any] struct {
+	items []T
+}
+
+func NewVector[T any](items ...T) Vector[T] {
+	return Vector[T] {
+		items: items,
+	}
+}
+
+func NewIntVector(items []int) Vector[int] {
+	return Vector[int] {
+		items: items,
+	}
+}
+// Type END OMIT
+
+// Method START OMIT
+func (v *Vector[T]) Last() (T, bool) {
+	var zero T
+	if len(v.items) == 0 {
+		return zero, false
+	}
+
+	return v.items[len(v.items)-1], true
+}
+
+func (v *Vector[T]) Append(items ...T) {
+	v.items = append(v.items, items...)
+}
+// Method END OMIT
+
+func main() {
+	// Call1 START OMIT
+	v1 := NewVector(float32(1),2,3,4)
+	fmt.Println(v1.Last())
+	v1.Append(10)
+	fmt.Println(v1.Last())
+	// Call1 END OMIT
+
+	// Call2 START OMIT
+	v2 := NewVector[int]()
+	fmt.Println(v2.Last())
+	// Call2 END OMIT
+}
