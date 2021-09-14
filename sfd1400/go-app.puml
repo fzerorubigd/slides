@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+Nginx -> Go : /api/v1/...
+Go --> Nginx : /api/v1/... result
+
+Nginx --> Go : Anything else
+Go --> PHP
+PHP --> Go
+Go --> Nginx : Anything else result
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+node "K8S" {
+    [Nginx/Ingress]
+    node "Nginx/PHP-fpm" {
+      [ Nginx ] - [PHP-fpm]
+    }
+
+    database "Postgrsql" {
+    }
+
+    database "Redis" {
+    }
+}
+
+[Nginx/Ingress] -->  [ Nginx ]
+[PHP-fpm] --> Postgrsql
+[PHP-fpm] --> Redis
+
+@enduml

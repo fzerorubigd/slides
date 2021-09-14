@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+node "K8S" {
+    [Nginx/Ingress]
+
+    node "Nginx/PHP-fpm" {
+      [Nginx] - [PHP-fpm]
+    }
+
+    node "Go Webserver" {
+      [Go]
+    }
+
+}
+
+[Nginx/Ingress] --> [Go]
+[Go] -->  [Nginx] : Pass not found to Nginx
+
+@enduml

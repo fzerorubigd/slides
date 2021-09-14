@@ -1,0 +1,113 @@
+Migrating A Web App From PHP to Go
+SFD 1400 / Mashhad
+21 Sep 2021
+
+fzerorubigd
+fzero@rubi.gd
+http://fzero.rubi.gd/
+@fzerorubigd
+
+* What you need to know?
+
+- How session works in PHP 
+- How Web Proxy works 
+
+* This is *NOT* about
+
+- When to migrate and why?
+- Encourage you to migrate your code
+
+* What we had 
+A simple Nginx/PHP Stack 
+ 
+.image sfd1400/current.png 333 325
+
+* Criteria
+
+- No downtime
+- We want to maintain one code at the end
+
+* The suggestion
+
+Start a new Go web server and route /api/v1 to Go web server
+
+.image sfd1400/want.png 539 478
+
+
+* My Suggestion
+
+.image sfd1400/suggestion.png 506 351
+
+* A Simpler version
+
+Go web server is in front of Nginx and *anything* pass through Go web server
+
+.image sfd1400/suggestion.png 506 351
+
+* How?
+    
+Handle all new routes in Go, and pass all not founds to PHP/Nginx setup via a simple proxy 
+
+  http.HandleFunc("/api/v1", func(w http.ResponseWriter, r *http.Request) {
+    // New Code
+  })
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    // Proxy request to old server!
+    // We have Cookies/Headers/UserAgent here
+  })
+
+.image sfd1400/go-app.png 325 422
+
+* An Old Route
+
+- Rewrite old route in Go with the exact same URL
+
+
+  http.HandleFunc("/api/v1", func(w http.ResponseWriter, r *http.Request) {
+    // New Code
+  })
+  http.HandleFunc("/user/logout", func(w http.ResponseWriter, r *http.Request) {
+    // New Code for logout in Go
+  })
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    // Proxy request to old server!
+  })
+  
+
+* Session In PHP 
+
+- You can customize session storage using [[https://www.php.net/manual/en/function.session-set-save-handler.php][session_set_save_handler]]
+
+.image sfd1400/php-doc.png
+
+* Migrate The Logout route
+
+- Save PHP Session Data in Redis 
+- Get The PHP Session Cookie 
+- Delete the Key in redis (We don't need the content)
+
+  http.HandleFunc("/user/logout", func(w http.ResponseWriter, r *http.Request) {
+    // Get the PHPSESSID from Cookie 
+    // Delete the key in Redis, you are logged out
+  })
+
+
+* Migrate The login route
+
+- We need to read session in Go 
+- PHP uses [[https://www.php.net/manual/en/function.serialize][serialize]] / [[https://www.php.net/manual/en/function.unserialize][unserialize]] function to write session data
+- Either change them to JSON (or any standard format)
+- Or use this [[https://github.com/yvasiyarov/php_session_decoder][library]] or similar libraries to read them
+
+  http.HandleFunc("/user/login", func(w http.ResponseWriter, r *http.Request) {
+    // Get the user name password from form
+    // Validate them with DB 
+    // Create PHP Session by create cookie and data in Redis
+    //(and if you want an extra session for Go)
+  })
+
+* Back to my suggestion
+
+- We start to create all routes in Go, one after another
+
+.image sfd1400/suggestion.png 506 351

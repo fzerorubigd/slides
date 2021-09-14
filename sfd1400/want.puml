@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+node "K8S" {
+    [Nginx/Ingress]
+
+    [Nginx/Router]
+    node "Nginx/PHP-fpm" {
+      [Nginx] - [PHP-fpm]
+    }
+
+    node "Go Webserver" {
+      [Go]
+    }
+
+
+    database "Postgrsql" {
+    }
+
+    database "Redis" {
+    }
+}
+[Nginx/Ingress] --> [Nginx/Router]
+[Nginx/Router] -->  [Nginx]
+[Nginx/Router] -->  [Go] : /ap1/v1
+[PHP-fpm] --> Postgrsql
+[PHP-fpm] --> Redis
+[Go] --> Postgrsql
+[Go] --> Redis
+@enduml
