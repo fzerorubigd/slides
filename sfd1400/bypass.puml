@@ -5,16 +5,16 @@ node "K8S" {
     [Nginx/Ingress]
 
     node "Old App" {
-      [Nginx] - [PHP-fpm]
+        [PHP-fpm]
     }
 
-    node "New Webserver" {
+    node "Go Webserver" {
       [Go]
     }
 
 }
 
 [Nginx/Ingress] --> [Go]
-[Go] -->  [Nginx] : Pass not found to Nginx
+[Go] --> [PHP-fpm] : Using fast-cgi library
 
 @enduml

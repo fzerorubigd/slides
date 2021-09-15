@@ -4,11 +4,11 @@
 node "K8S" {
     [Nginx/Ingress]
 
-    node "Nginx/PHP-fpm" {
+    node "Old App" {
       [Nginx] - [PHP-fpm]
     }
 
-    node "Go Webserver" {
+    node "New Webserver" {
       [Go]
     }
 

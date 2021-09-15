@@ -1,23 +1,23 @@
 Migrating A Web App From PHP to Go
 SFD 1400 / Mashhad
-21 Sep 2021
+16 Sep 2021
 
 fzerorubigd
 fzero@rubi.gd
 http://fzero.rubi.gd/
 @fzerorubigd
 
-* What you need to know?
-
-- How session works in PHP 
-- How Web Proxy works 
-
 * This is *NOT* about
 
 - When to migrate and why?
 - Encourage you to migrate your code
 
+This is a succesful experience: [[https://en.wikipedia.org/wiki/Survivorship_bias][Survivorship bias]]
+
+You can adopt this for migrating a web server to *ANY* other language
+
 * What we had 
+
 A simple Nginx/PHP Stack 
  
 .image sfd1400/current.png 333 325
@@ -26,15 +26,16 @@ A simple Nginx/PHP Stack
 
 - No downtime
 - We want to maintain one code at the end
+- [[https://en.wikipedia.org/wiki/Second-system_effect][Second System effect]]
 
-* The suggestion
+* The Suggestion
 
 Start a new Go web server and route /api/v1 to Go web server
 
 .image sfd1400/want.png 539 478
 
 
-* My Suggestion
+* New Solution
 
 .image sfd1400/suggestion.png 506 351
 
@@ -42,7 +43,7 @@ Start a new Go web server and route /api/v1 to Go web server
 
 Go web server is in front of Nginx and *anything* pass through Go web server
 
-.image sfd1400/suggestion.png 506 351
+.image sfd1400/simpler.png 506 351
 
 * How?
     
@@ -109,5 +110,11 @@ Handle all new routes in Go, and pass all not founds to PHP/Nginx setup via a si
 * Back to my suggestion
 
 - We start to create all routes in Go, one after another
+
+.image sfd1400/suggestion.png 506 351
+
+* Bonus Scenario
+
+- Directly call PHP-fpm using fast-cgi (see [[https://github.com/caddyserver][Caddy Server]] for an example)
 
 .image sfd1400/suggestion.png 506 351
